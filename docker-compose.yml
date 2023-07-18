@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  db_api:
+    image: mysql:latest
+    container_name: db_api
+    networks:
+      - api_network
+    environment:
+      - MYSQL_DATABASE=api_db
+      - MYSQL_PASSWORD=api00
+      - MYSQL_ROOT_PASSWORD=api00
+      - MYSQL_ALLOW_EMPTY_PASSWORD=false
+    restart: always
+    ports:
+      - "3306:3306"
+
+  node_api:
+    image: node:latest
+    container_name: node_api
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db_api
+    command:
+      - bash
+      - -c
+      - |
+        npm run build-test
+        npm run start
+    working_dir: /var/www/html/
+    stdin_open: true
+    tty: true
+    restart: always
+    networks:
+      - api_network
+    environment:
+      - NODE_ENV=production
+      - API_TOKEN=leA6mVvVuBBVi4Fjotp4qgBpv97DHxzMhPB
+      - DB_NAME=api_db
+      - DB_USER=root
+      - DB_PASS=api00
+      - DB_HOST=db_api
+      - DB_DIALECT=mysql
+    ports:
+      - "80:3000"
+
+networks:
+  api_network:

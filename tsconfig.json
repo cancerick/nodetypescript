@@ -1,0 +1,21 @@
+{
+    "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
+    "ts-node": {
+    "transpileOnly": true,
+    "files": true
+    },
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "forceConsistentCasingInFileNames": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+    },
+    "lib": ["es2015"]
+}
